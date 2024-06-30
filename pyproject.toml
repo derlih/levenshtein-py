@@ -1,0 +1,22 @@
+[project]
+name = "levenshtein-py"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [{ name = "Dmitry Erlikh", email = "derlih@gmail.com" }]
+dependencies = []
+requires-python = ">=3.8"
+readme = "README.md"
+license = { text = "MIT" }
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.dev-dependencies]
+test = ["pytest>=8.2.2", "mypy[mypyc]>=1.10.1"]
+
+[tool.pdm.scripts]
+test = "pytest"
