@@ -18,9 +18,11 @@ distribution = true
 [tool.pdm.dev-dependencies]
 test = ["pytest>=8.2.2"]
 mypy = ["mypy>=1.10.1"]
+lint = ["pre-commit>=3.5.0"]
 
 [tool.pdm.scripts]
 test = "pytest"
+lint = "pre-commit run --all-files"
 mypy = "mypy src"
 
 [tool.mypy]
