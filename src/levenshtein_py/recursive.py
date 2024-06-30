@@ -4,8 +4,10 @@ def recursive(a: str, b: str) -> int:
     if not b:
         return len(a)
 
-    head_a, *tail_a = a
-    head_b, *tail_b = b
+    head_a = a[0]
+    tail_a = a[1:]
+    head_b = b[0]
+    tail_b = b[1:]
 
     if head_a == head_b:
         return recursive(tail_a, tail_b)

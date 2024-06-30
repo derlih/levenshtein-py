@@ -16,7 +16,13 @@ build-backend = "pdm.backend"
 distribution = true
 
 [tool.pdm.dev-dependencies]
-test = ["pytest>=8.2.2", "mypy[mypyc]>=1.10.1"]
+test = ["pytest>=8.2.2"]
+mypy = ["mypy>=1.10.1"]
 
 [tool.pdm.scripts]
 test = "pytest"
+mypy = "mypy src"
+
+[tool.mypy]
+strict = true
+exclude = ["tests"]
