@@ -13,6 +13,7 @@ from levenshtein_py import full_matrix, recursive
         pytest.param("", "dog", 3),
         pytest.param("kitten", "sitting", 3),
         pytest.param("for", "force", 2),
+        pytest.param("Levenshtein", "Frankenstein", 6),
     ],
 )
 @pytest.mark.parametrize("fn", [recursive, full_matrix])
