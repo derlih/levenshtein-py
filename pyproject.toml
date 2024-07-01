@@ -15,9 +15,6 @@ build-backend = "pdm.backend"
 [tool.pdm.build]
 run-setuptools = true
 
-# [tool.pdm]
-# distribution = true
-
 [tool.pdm.dev-dependencies]
 test = ["pytest>=8.2.2"]
 mypy = ["mypy>=1.10.1"]
