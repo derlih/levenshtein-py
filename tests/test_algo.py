@@ -1,15 +1,20 @@
+from typing import Callable
+
 import pytest
 
-from levenshtein_py import recursive
+from levenshtein_py import full_matrix, recursive
 
 
 @pytest.mark.parametrize(
     ("a", "b", "distance"),
     [
+        pytest.param("dog", "dog", 0),
         pytest.param("dog", "", 3),
         pytest.param("", "dog", 3),
         pytest.param("kitten", "sitting", 3),
+        pytest.param("for", "force", 2),
     ],
 )
-def test_distance(a: str, b: str, distance: int):
-    assert recursive(a, b) == distance
+@pytest.mark.parametrize("fn", [recursive, full_matrix])
+def test_distance(a: str, b: str, distance: int, fn: Callable[[str, str], int]):
+    assert fn(a, b) == distance
