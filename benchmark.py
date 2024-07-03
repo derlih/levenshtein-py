@@ -5,6 +5,7 @@ from typing import Tuple
 ITERATIONS = 100_000
 S1 = "Levenshtein"
 S2 = "Frankenstein"
+DISTANCE = 6
 
 
 @dataclass
@@ -20,8 +21,8 @@ if __name__ == "__main__":
     packages: Tuple[PackageToTest, ...] = (
         PackageToTest(
             "levenshtein_py",
-            "from levenshtein_py import full_matrix",
-            f"full_matrix('{S1}', '{S2}')",
+            "from levenshtein_py import two_rows",
+            f"two_rows('{S1}', '{S2}')",
         ),
         PackageToTest(
             "Levenshtein",
@@ -44,6 +45,15 @@ if __name__ == "__main__":
             f"levenshtein('{S1}', '{S2}')",
         ),
     )
+
+    # Check correctness
+    for pkg_to_test in packages:
+        exec(
+            f"""
+{pkg_to_test.setup}
+assert {pkg_to_test.call} == {DISTANCE}
+             """
+        )
 
     for pkg_to_test in packages:
         result = timeit(
