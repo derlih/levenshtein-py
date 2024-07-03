@@ -1,0 +1,3 @@
+[submodule "src/vendor/levenshtein.c"]
+	path = src/vendor/levenshtein.c
+	url = https://github.com/wooorm/levenshtein.c.git

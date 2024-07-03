@@ -1,4 +1,4 @@
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 def classic(a: str, b: str) -> int:
@@ -42,4 +42,11 @@ def wagner_fischer(a: str, b: str) -> int:
     return v0[len_b]
 
 
-levenshtein = wagner_fischer
+try:
+    from .native import levenshtein_native
+
+    def levenshtein(a: str, b: str) -> int:
+        return levenshtein_native(a, b)
+
+except ImportError:
+    levenshtein = wagner_fischer

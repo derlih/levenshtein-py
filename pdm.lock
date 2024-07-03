@@ -5,7 +5,7 @@
 groups = ["default", "test", "mypy", "lint", "benchmark"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:1c728231a00bbf054efb25fd000214a4ce02f3da9f98387675f077e95598fb8b"
+content_hash = "sha256:6df343a156f68484eb9ba3fa96fae7d6a1f655b0111a163a8ba343ea5cc41be2"
 
 [[package]]
 name = "cfgv"
@@ -332,15 +332,6 @@ groups = ["benchmark"]
 files = [
     {file = "pylev-1.4.0-py2.py3-none-any.whl", hash = "sha256:7b2e2aa7b00e05bb3f7650eb506fc89f474f70493271a35c242d9a92188ad3dd"},
     {file = "pylev-1.4.0.tar.gz", hash = "sha256:9e77e941042ad3a4cc305dcdf2b2dec1aec2fbe3dd9015d2698ad02b173006d1"},
-]
-
-[[package]]
-name = "pylevenshtein"
-version = "1.0"
-summary = "Levenshtein project for python"
-groups = ["benchmark"]
-files = [
-    {file = "pylevenshtein-1.0.tar.gz", hash = "sha256:df64b48b480c08a8bc3db112d27b0e3995e8793205e535bd41bcac0e22b6c1e7"},
 ]
 
 [[package]]
