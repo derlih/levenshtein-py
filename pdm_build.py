@@ -10,7 +10,7 @@ def pdm_build_hook_enabled(context: Context) -> None:
 
 
 def pdm_build_update_setup_kwargs(context: Context, setup_kwargs: Dict[str, Any]):
-    src = Path(__file__).parent / "src" / "levenshtein_py" / "two_rows.py"
+    src = Path(__file__).parent / "src" / "levenshtein_py" / "__init__.py"
     setup_kwargs.update(
         ext_modules=cythonize(str(src), compiler_directives={"language_level": "3"})
     )

@@ -2,7 +2,7 @@ from typing import Callable
 
 import pytest
 
-from levenshtein_py import full_matrix, recursive, two_rows
+from levenshtein_py import classic, wagner_fischer
 
 
 @pytest.mark.parametrize(
@@ -16,6 +16,6 @@ from levenshtein_py import full_matrix, recursive, two_rows
         pytest.param("Levenshtein", "Frankenstein", 6),
     ],
 )
-@pytest.mark.parametrize("fn", [recursive, full_matrix, two_rows])
+@pytest.mark.parametrize("fn", [classic, wagner_fischer])
 def test_distance(a: str, b: str, distance: int, fn: Callable[[str, str], int]):
     assert fn(a, b) == distance

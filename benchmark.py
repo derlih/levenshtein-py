@@ -21,8 +21,8 @@ if __name__ == "__main__":
     packages: Tuple[PackageToTest, ...] = (
         PackageToTest(
             "levenshtein_py",
-            "from levenshtein_py import two_rows",
-            f"two_rows('{S1}', '{S2}')",
+            "from levenshtein_py import levenshtein",
+            f"levenshtein('{S1}', '{S2}')",
         ),
         PackageToTest(
             "Levenshtein",
