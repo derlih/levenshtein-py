@@ -8,13 +8,17 @@ requires-python = ">=3.8"
 readme = "README.md"
 license = { text = "MIT" }
 
+[build-system]
+requires = ["pdm-backend", "mypy[mypyc]>=1.10.1", "Cython>=3.0.10"]
+build-backend = "pdm.backend"
+
+[tool.mypy]
+strict = true
+exclude = ["tests"]
+
 [tool.pdm.version]
 source = "file"
 path = "src/levenshtein_py/__init__.py"
-
-[build-system]
-requires = ["pdm-backend", "mypy[mypyc]>=1.10.1"]
-build-backend = "pdm.backend"
 
 [tool.pdm.build]
 run-setuptools = true
@@ -23,13 +27,15 @@ run-setuptools = true
 test = ["pytest>=8.2.2"]
 mypy = ["mypy>=1.10.1"]
 lint = ["pre-commit>=3.5.0"]
+benchmark = [
+    "pylev>=1.4.0",
+    "Levenshtein>=0.25.1",
+    "python-Levenshtein>=0.25.1",
+    "leven>=1.0.4",
+]
 
 [tool.pdm.scripts]
 test = "pytest"
 lint = "pre-commit run --all-files"
 mypy = "mypy src"
 benchmark = "python benchmark.py"
-
-[tool.mypy]
-strict = true
-exclude = ["tests"]
