@@ -15,6 +15,7 @@ from levenshtein_py import classic, wagner_fischer, wagner_fischer_native
         pytest.param("sitting", "kitten", 3),
         pytest.param("for", "force", 2),
         pytest.param("Levenshtein", "Frankenstein", 6),
+        pytest.param("кошка", "кот", 3, id="Unicode"),
     ],
 )
 @pytest.mark.parametrize("fn", [classic, wagner_fischer, wagner_fischer_native])
