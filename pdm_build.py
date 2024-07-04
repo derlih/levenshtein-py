@@ -13,14 +13,7 @@ def pdm_build_update_setup_kwargs(
 ) -> None:
     sources = [
         "src/levenshtein_py/native.c",
-        "src/vendor/levenshtein.c/levenshtein.c",
     ]
     setup_kwargs.update(
-        ext_modules=[
-            Extension(
-                name="levenshtein_py.native",
-                sources=sources,
-                include_dirs=["src/vendor/levenshtein.c"],
-            )
-        ]
+        ext_modules=[Extension(name="levenshtein_py.native", sources=sources)]
     )
