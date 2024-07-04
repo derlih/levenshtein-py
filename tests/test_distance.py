@@ -12,6 +12,7 @@ from levenshtein_py import classic, wagner_fischer, wagner_fischer_native
         pytest.param("dog", "", 3),
         pytest.param("", "dog", 3),
         pytest.param("kitten", "sitting", 3),
+        pytest.param("sitting", "kitten", 3),
         pytest.param("for", "force", 2),
         pytest.param("Levenshtein", "Frankenstein", 6),
     ],
