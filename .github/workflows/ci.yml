@@ -37,7 +37,7 @@ jobs:
         id: cache-pdm-lint
         uses: actions/cache@v4
         with:
-          path: ~/.config/pdm
+          path: ~/.cache/pdm
           key: ${{ runner.os }}-{{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
         if: steps.cache-pdm-lint.outputs.cache-hit != 'true'
