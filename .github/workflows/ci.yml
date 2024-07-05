@@ -20,10 +20,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup PDM
-        uses: pdm-project/setup-pdm@v4
+      - name: Install python
+        uses: actions/setup-python@v5
         with:
-          cache: true
+          python-version: '3.8'
+      - name: Install PDM
+        run: pip install pdm
       - name: Install deps
         run: pdm install --no-self
       - name: Linter
