@@ -25,7 +25,7 @@ jobs:
         id: setup-python
         with:
           python-version: "3.8"
-      - name: Restore PDM
+      - name: Restore PDM installation
         id: cache-pdm
         uses: actions/cache@v4
         with:
@@ -43,6 +43,11 @@ jobs:
       - name: Install lint deps
         if: steps.cache-pdm-lint.outputs.cache-hit != 'true'
         run: pdm install --no-self -G lint
+      - name: Restore pre-commit hooks
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Linter
         run: pdm lint
       - name: Type check
