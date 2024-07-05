@@ -22,12 +22,27 @@ jobs:
         uses: actions/checkout@v4
       - name: Install python
         uses: actions/setup-python@v5
+        id: setup-python
         with:
-          python-version: '3.8'
+          python-version: "3.8"
+      - name: Restore PDM
+        id: cache-pdm
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-{{ steps.setup-python.outputs.python-version }}-pdm
       - name: Install PDM
+        if: steps.cache-pdm.outputs.cache-hit != 'true'
         run: pip install pdm
-      - name: Install deps
-        run: pdm install --no-self
+      - name: Restore lint cache
+        id: cache-pdm-lint
+        uses: actions/cache@v4
+        with:
+          path: ~/.config/pdm
+          key: ${{ runner.os }}-{{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml", "pdm.lock') }}
+      - name: Install lint deps
+        if: steps.cache-pdm-lint.outputs.cache-hit != 'true'
+        run: pdm install --no-self -G lint
       - name: Linter
         run: pdm lint
       - name: Type check
