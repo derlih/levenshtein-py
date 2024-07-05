@@ -32,7 +32,6 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-{{ steps.setup-python.outputs.python-version }}-pdm
       - name: Install PDM
-        if: steps.cache-pdm.outputs.cache-hit != 'true'
         run: pip install pdm
       - name: Restore lint cache
         id: cache-pdm-lint
