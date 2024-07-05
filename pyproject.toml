@@ -12,10 +12,6 @@ license = { text = "MIT" }
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
-[tool.mypy]
-strict = true
-exclude = ["tests"]
-
 [tool.pdm.version]
 source = "file"
 path = "src/levenshtein_py/__init__.py"
@@ -38,3 +34,7 @@ test = "pytest"
 lint = "pre-commit run --all-files"
 mypy = "mypy src"
 benchmark = "python benchmark.py"
+
+[tool.mypy]
+strict = true
+exclude = ["tests"]

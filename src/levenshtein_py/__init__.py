@@ -43,10 +43,10 @@ def wagner_fischer(a: str, b: str) -> int:
 
 
 try:
-    from .native import wagner_fischer_native
+    from .native import wagner_fischer_native  # type: ignore[import-untyped]
 
     def levenshtein(a: str, b: str) -> int:
-        return wagner_fischer_native(a, b)
+        return wagner_fischer_native(a, b)  # type: ignore[no-any-return]
 
 except ImportError:
     levenshtein = wagner_fischer
