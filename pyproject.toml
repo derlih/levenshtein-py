@@ -25,8 +25,7 @@ run-setuptools = true
 
 [tool.pdm.dev-dependencies]
 test = ["pytest>=8.2.2"]
-mypy = ["mypy>=1.10.1"]
-lint = ["pre-commit>=3.5.0"]
+lint = ["pre-commit>=3.5.0", "mypy>=1.10.1"]
 benchmark = [
     "pylev>=1.4.0",
     "Levenshtein>=0.25.1",

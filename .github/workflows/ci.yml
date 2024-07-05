@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+permissions: {}
+
+jobs:
+  lint:
+    permissions:
+      contents: read
+
+    name: Code lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          cache: true
+      - name: Install deps
+        run: pdm install --no-self
+      - name: Linter
+        run: pdm lint
+      - name: Type check
+        run: pdm mypy
