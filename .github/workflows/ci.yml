@@ -10,6 +10,9 @@ on:
 
 permissions: {}
 
+env:
+  PDM_VERSION: 2.17.1
+
 jobs:
   lint:
     permissions:
@@ -24,21 +27,22 @@ jobs:
         uses: actions/setup-python@v5
         id: setup-python
         with:
-          python-version: "3.8"
+          python-version: 3.8
       - name: Restore PDM installation
         id: cache-pdm
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-{{ steps.setup-python.outputs.python-version }}-pdm
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
       - name: Install PDM
-        run: pip install pdm
+        if: steps.cache-pdm.outputs.cache-hit != 'true'
+        run: pip install pdm==$PDM_VERSION
       - name: Restore lint cache
         id: cache-pdm-lint
         uses: actions/cache@v4
         with:
           path: ~/.cache/pdm
-          key: ${{ runner.os }}-{{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
         if: steps.cache-pdm-lint.outputs.cache-hit != 'true'
         run: pdm install -G lint
