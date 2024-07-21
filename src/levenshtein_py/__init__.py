@@ -1,3 +1,5 @@
+from .native import wagner_fischer_native  # type: ignore[import-untyped]
+
 __version__ = "0.5.0"
 
 
@@ -42,11 +44,5 @@ def wagner_fischer(a: str, b: str) -> int:
     return v0[len_b]
 
 
-try:
-    from .native import wagner_fischer_native  # type: ignore[import-untyped]
-
-    def levenshtein(a: str, b: str) -> int:
-        return wagner_fischer_native(a, b)  # type: ignore[no-any-return]
-
-except ImportError:
-    levenshtein = wagner_fischer
+def levenshtein(a: str, b: str) -> int:
+    return wagner_fischer_native(a, b)  # type: ignore[no-any-return]
