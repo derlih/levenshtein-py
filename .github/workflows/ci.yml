@@ -53,3 +53,42 @@ jobs:
         run: pdm lint
       - name: Type check
         run: pdm mypy
+
+
+  test:
+    permissions:
+      contents: read
+
+    name: Unit tests
+    strategy:
+      matrix:
+        python_version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        os: [ubuntu, macos, windows]
+      fail-fast: true
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install python
+        uses: actions/setup-python@v5
+        id: setup-python
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Restore PDM installation
+        id: cache-pdm
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
+      - name: Install PDM
+        run: pip install pdm==$PDM_VERSION
+      - name: Restore test cache
+        id: cache-pdm-test
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pdm
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
+      - name: Install lint deps
+        run: pdm install -G test
+      - name: Run unit tests
+        run: pdm test
