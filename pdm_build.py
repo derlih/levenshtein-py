@@ -1,7 +1,7 @@
-from distutils.core import Extension
 from typing import Any, Dict
 
 from pdm.backend.hooks import Context
+from setuptools import Extension
 
 
 def pdm_build_hook_enabled(context: Context) -> None:

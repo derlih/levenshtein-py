@@ -6,8 +6,8 @@
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
-  const PyObject *a;
-  const PyObject *b;
+  PyObject *a;
+  PyObject *b;
 
   if (!PyArg_ParseTuple(args, "UU", &a, &b)) {
     PyErr_SetString(PyExc_ValueError, "Can't parse arguments");
