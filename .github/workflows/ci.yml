@@ -35,7 +35,6 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
       - name: Install PDM
-        if: steps.cache-pdm.outputs.cache-hit != 'true'
         run: pip install pdm==$PDM_VERSION
       - name: Restore lint cache
         id: cache-pdm-lint
@@ -44,7 +43,6 @@ jobs:
           path: ~/.cache/pdm
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
-        if: steps.cache-pdm-lint.outputs.cache-hit != 'true'
         run: pdm install -G lint
       - name: Restore pre-commit hooks
         uses: actions/cache@v4
