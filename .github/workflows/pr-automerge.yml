@@ -11,6 +11,6 @@ jobs:
 
     steps:
     - name: Mark for automerge
-      run: gh pr merge --repo $GITHUB_REPOSITORY --auto --squash --delete-branch
+      run: gh pr merge --repo ${{ github.repository }} --auto --squash --delete-branch
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
