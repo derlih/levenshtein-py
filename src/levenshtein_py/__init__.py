@@ -1,7 +1,5 @@
 from .native import wagner_fischer_native  # type: ignore[import-untyped]
 
-__version__ = "0.5.0"
-
 
 def classic(a: str, b: str) -> int:
     if not a:
