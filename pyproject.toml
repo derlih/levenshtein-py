@@ -1,7 +1,7 @@
 [project]
 name = "levenshtein-py"
 dynamic = ["version"]
-description = "Default template for PDM package"
+description = "Levenstein package"
 authors = [{ name = "Dmitry Erlikh", email = "derlih@gmail.com" }]
 dependencies = []
 requires-python = ">=3.8"
@@ -12,12 +12,14 @@ license = { text = "MIT" }
 requires = ["pdm-backend", "setuptools"]
 build-backend = "pdm.backend"
 
-[tool.pdm.version]
-source = "file"
-path = "src/levenshtein_py/__init__.py"
+[tool.pdm]
+distribution = true
 
 [tool.pdm.build]
 run-setuptools = true
+
+[tool.pdm.version]
+source = "scm"
 
 [tool.pdm.dev-dependencies]
 test = ["pytest>=8.2.2", "coverage>=7.6.0", "pytest-cov>=5.0.0"]
