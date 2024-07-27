@@ -1,0 +1,43 @@
+name: Upload Python Package to PyPI when a Release is Created
+
+on:
+  release:
+    types: [created]
+
+permissions: {}
+
+env:
+  PDM_VERSION: 2.17.1
+  PDM_PUBLISH_REPO: https://test.pypi.org/legacy/
+
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+
+    strategy:
+      matrix:
+        python_version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        os: [ubuntu, macos, windows]
+
+    runs-on: ${{ matrix.os }}-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install python
+        uses: actions/setup-python@v5
+        id: setup-python
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Restore PDM installation
+        id: cache-pdm
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
+      - name: Install PDM
+        run: pip install pdm==${{ env.PDM_VERSION }}
+      - name: Publish to PyPI
+        run: pdm publish -r "${{ env.PDM_PUBLISH_REPO }}"" -u "__token__" -P "${{ secrets.PYPI_TOKEN }}"
