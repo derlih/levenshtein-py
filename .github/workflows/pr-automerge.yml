@@ -1,0 +1,14 @@
+name: Automerge PR when label "automerge" set
+
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+  automerge:
+    if: contains(github.event.pull_request.labels.*.name, 'automerge')
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Mark for automerge
+      run: gh pr merge --auto --squash --delete-branch
