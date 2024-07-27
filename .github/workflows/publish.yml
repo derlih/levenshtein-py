@@ -12,7 +12,7 @@ env:
 
 
 jobs:
-  publish:
+  build_dist:
     permissions:
       contents: read
 
@@ -40,5 +40,31 @@ jobs:
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
       - name: Install PDM
         run: pip install pdm==${{ env.PDM_VERSION }}
+      - name: Build sdist
+        if: ${{ matrix.os }} == "ubuntu" && ${{ matrix.python_version }} == "3.8"
+        run: pdm build --no-wheel
+      - name: Build wheel
+        run: pdm build --no-sdist
+      - name: Upload dist artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.os }}-${{ matrix.python_version }}
+          path: dist/*
+
+  publish:
+    permissions:
+      contents: read
+
+    runs-on: ubuntu-latest
+    needs: build_dist
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Download artifacts
+        id: download-artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
       - name: Publish to PyPI
         run: pdm publish -r "${{ env.PDM_PUBLISH_REPO }}" -u "__token__" -P "${{ secrets.PYPI_TOKEN }}"
