@@ -20,6 +20,7 @@ jobs:
       matrix:
         python_version: ['3.8', '3.9', '3.10', '3.11', '3.12']
         os: [ubuntu, macos, windows]
+      fail-fast: true
 
     runs-on: ${{ matrix.os }}-latest
 
@@ -40,4 +41,4 @@ jobs:
       - name: Install PDM
         run: pip install pdm==${{ env.PDM_VERSION }}
       - name: Publish to PyPI
-        run: pdm publish -r "${{ env.PDM_PUBLISH_REPO }}"" -u "__token__" -P "${{ secrets.PYPI_TOKEN }}"
+        run: pdm publish -r "${{ env.PDM_PUBLISH_REPO }}" -u "__token__" -P "${{ secrets.PYPI_TOKEN }}"
