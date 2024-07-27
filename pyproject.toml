@@ -20,7 +20,7 @@ path = "src/levenshtein_py/__init__.py"
 run-setuptools = true
 
 [tool.pdm.dev-dependencies]
-test = ["pytest>=8.2.2"]
+test = ["pytest>=8.2.2", "coverage>=7.6.0", "pytest-cov>=5.0.0"]
 lint = ["pre-commit>=3.5.0", "mypy>=1.10.1"]
 benchmark = [
     "pylev>=1.4.0",
@@ -35,6 +35,12 @@ lint = "pre-commit run --all-files"
 mypy = "mypy src"
 benchmark = "python benchmark.py"
 
+test-cov.composite = ["pytest --cov src", "python -m coverage xml"]
+
 [tool.mypy]
 strict = true
 exclude = ["tests"]
+
+[tool.coverage.run]
+branch = true
+omit = ["tests"]
