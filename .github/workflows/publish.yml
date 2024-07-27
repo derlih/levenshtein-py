@@ -13,6 +13,7 @@ env:
 
 jobs:
   build_dist:
+    name: Build source and wheel package
     permissions:
       contents: read
 
@@ -50,8 +51,10 @@ jobs:
         with:
           name: dist-${{ matrix.os }}-${{ matrix.python_version }}
           path: dist/*
+          retention-days: 1
 
   publish:
+    name: Publish to PyPI
     permissions:
       contents: read
 
@@ -66,5 +69,18 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           merge-multiple: true
+      - name: Install python
+        uses: actions/setup-python@v5
+        id: setup-python
+        with:
+          python-version: 3.8
+      - name: Restore PDM installation
+        id: cache-pdm
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
+      - name: Install PDM
+        run: pip install pdm==${{ env.PDM_VERSION }}
       - name: Publish to PyPI
         run: pdm publish -r "${{ env.PDM_PUBLISH_REPO }}" -u "__token__" -P "${{ secrets.PYPI_TOKEN }}"
