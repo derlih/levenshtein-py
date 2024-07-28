@@ -43,7 +43,7 @@ jobs:
           path: ~/.cache/pdm
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
-        run: pdm install -v -G lint
+        run: pdm install -G lint
       - name: Restore pre-commit hooks
         uses: actions/cache@v4
         with:
