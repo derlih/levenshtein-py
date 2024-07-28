@@ -41,9 +41,6 @@ jobs:
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
       - name: Install PDM
         run: pip install pdm==${{ env.PDM_VERSION }}
-      - name: Build sdist
-        if: ${{ matrix.os }} == "ubuntu" && ${{ matrix.python_version }} == "3.8"
-        run: pdm build --no-wheel
       - name: Build wheel
         run: pdm build --no-sdist
       - name: Upload dist artifacts
@@ -82,5 +79,7 @@ jobs:
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
       - name: Install PDM
         run: pip install pdm==${{ env.PDM_VERSION }}
+      - name: Build sdist
+        run: pdm build --no-wheel
       - name: Publish to PyPI
         run: pdm publish -r "${{ env.PDM_PUBLISH_REPO }}" -u "__token__" -P "${{ secrets.PYPI_TOKEN }}"
