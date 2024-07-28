@@ -9,8 +9,6 @@ permissions: {}
 
 env:
   PDM_VERSION: 2.17.1
-  PDM_PUBLISH_REPO: https://test.pypi.org/legacy/
-
 
 jobs:
   build_wheel:
@@ -67,14 +65,16 @@ jobs:
         id: setup-python
         with:
           python-version: 3.8
-      - name: Restore PDM installation
+      - name: Restore PDM and Twine installation
         id: cache-pdm
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}-twine
       - name: Install PDM
         run: pip install pdm==${{ env.PDM_VERSION }}
+      - name: Install twine
+        run: pip install twine
       - name: Build sdist
         run: pdm build --no-wheel
       - name: Download artifacts
@@ -88,4 +88,8 @@ jobs:
         with:
           files: dist/*
       - name: Publish to PyPI
-        run: pdm publish -r "${{ env.PDM_PUBLISH_REPO }}" -u "__token__" -P "${{ secrets.PYPI_TOKEN }}"
+        run: twine upload --disable-progress-bar dist/*
+        env:
+          TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
