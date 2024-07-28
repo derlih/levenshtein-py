@@ -89,12 +89,11 @@ jobs:
         with:
           files: |
             dist/*
-            wheels/dist/*
+            wheels/*
       - name: Publish to PyPI
         run: |
           twine upload --disable-progress-bar dist/*
-          ls -la wheels/*
-          twine upload wheels/dist/*
+          twine upload wheels/*
         env:
           TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
           TWINE_USERNAME: __token__
