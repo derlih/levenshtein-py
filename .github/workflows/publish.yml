@@ -62,12 +62,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Download artifacts
-        id: download-artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: dist-*
-          merge-multiple: true
       - name: Install python
         uses: actions/setup-python@v5
         id: setup-python
@@ -83,6 +77,12 @@ jobs:
         run: pip install pdm==${{ env.PDM_VERSION }}
       - name: Build sdist
         run: pdm build --no-wheel
+      - name: Download artifacts
+        id: download-artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
