@@ -9,7 +9,7 @@ readme = "README.md"
 license = { text = "MIT" }
 
 [build-system]
-requires = ["pdm-backend", "setuptools"]
+requires = ["pdm-backend", "setuptools", "Cython", "mypy[mypyc]"]
 build-backend = "pdm.backend"
 
 [tool.pdm]
@@ -29,7 +29,10 @@ benchmark = [
     "Levenshtein>=0.25.1",
     "python-Levenshtein>=0.25.1",
     "leven>=1.0.4",
+    "Cython>=3.0.11",
+    "mypy[mypyc]>=1.11.1",
 ]
+build = ["pdm-backend>=2.3.3", "setuptools>=72.2.0"]
 
 [tool.pdm.scripts]
 test = "pytest"
