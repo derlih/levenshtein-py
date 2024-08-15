@@ -18,14 +18,9 @@ def pdm_build_update_setup_kwargs(
         sources=["src/levenshtein_py/native.c"],
     )
     cython_exts: list[Extension] = cythonize(
-        [
-            Extension(
-                name="levenshtein_py.cython",
-                sources=["src/levenshtein_py/wagner_fischer.py"],
-            )
-        ]
+        ["src/levenshtein_py/wagner_fischer_cython.py"]
     )
-    mypyc_exts = mypycify(["src/levenshtein_py/mypyc.py"])
+    mypyc_exts = mypycify(["src/levenshtein_py/wagner_fischer_mypyc.py"])
 
     setup_kwargs.update(
         ext_modules=[
