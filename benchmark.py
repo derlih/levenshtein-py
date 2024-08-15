@@ -20,9 +20,14 @@ if __name__ == "__main__":
 
     packages: Tuple[PackageToTest, ...] = (
         PackageToTest(
-            "levenshtein_py",
-            "from levenshtein_py import levenshtein",
-            f"levenshtein('{S1}', '{S2}')",
+            "levenshtein_py (pure python)",
+            "from levenshtein_py import wagner_fischer",
+            f"wagner_fischer('{S1}', '{S2}')",
+        ),
+        PackageToTest(
+            "levenshtein_py (native)",
+            "from levenshtein_py.native import wagner_fischer_native",
+            f"wagner_fischer_native('{S1}', '{S2}')",
         ),
         PackageToTest(
             "Levenshtein",
