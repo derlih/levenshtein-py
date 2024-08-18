@@ -1,4 +1,5 @@
 import platform
+import sys
 from dataclasses import dataclass
 from enum import Enum
 from timeit import timeit
@@ -75,25 +76,34 @@ assert {pkg.call} == {DISTANCE}
     return BenchmarkResult(pkg.name, result)
 
 
-def main(format: OutputFormat = OutputFormat.TEXT) -> None:
+def main(
+    output: typer.FileTextWrite = typer.Argument(sys.stdout),
+    format: OutputFormat = typer.Option(OutputFormat.TEXT),
+) -> None:
     with typer.progressbar(PACKAGES) as pkgs:
         results = tuple((benchmark(pkg) for pkg in pkgs))
 
     if format == OutputFormat.TEXT:
         for result in results:
-            typer.echo(f"{result.pkg}: {result.duration / ITERATIONS} sec")
+            typer.echo(f"{result.pkg}: {result.duration / ITERATIONS} sec", output)
     elif format == OutputFormat.MARKDOWN:
-        typer.echo(f"# Benchmark ({ITERATIONS} iterations)")
-        typer.echo()
-        typer.echo(f"The measurements are done on `{platform.processor()}`")
-        typer.echo()
+        typer.echo(f"# Benchmark ({ITERATIONS} iterations)", output)
+        typer.echo(file=output)
+
+        typer.echo("| OS | CPU | Python |", output)
+        typer.echo("| -- | --- | ------ |", output)
+        typer.echo(
+            f"| {platform.system()} {platform.release()} | {platform.processor()} | {sys.version} |",
+            output,
+        )
         typer.echo(
             """
 | Package | Duration of one iteration |
-| ------- | ------------------------- |"""
+| ------- | ------------------------- |""",
+            output,
         )
         for result in results:
-            typer.echo(f"| {result.pkg} | {result.duration} |")
+            typer.echo(f"| {result.pkg} | {result.duration} |", output)
 
 
 if __name__ == "__main__":
