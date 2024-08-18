@@ -60,4 +60,4 @@ exclude = ["tests"]
 
 [tool.coverage.run]
 branch = true
-omit = ["tests"]
+omit = ["tests", "__init__.py"]
