@@ -1,4 +1,4 @@
-from .native import wagner_fischer_native  # type: ignore[import-untyped]
+from .native import wagner_fischer_native  # type: ignore
 
 
 def classic(a: str, b: str) -> int:
