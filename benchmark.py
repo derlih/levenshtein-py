@@ -6,10 +6,12 @@ from timeit import timeit
 
 import typer
 
+from levdist import classic
+
 ITERATIONS = 1_000_000
 S1 = "Levenshtein"
 S2 = "Frankenstein"
-DISTANCE = 6
+DISTANCE = classic(S1, S2)
 
 
 @dataclass(frozen=True)

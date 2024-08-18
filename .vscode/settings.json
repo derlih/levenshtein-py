@@ -5,6 +5,7 @@
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
   "cSpell.words": [
-    "typer"
+    "typer",
+    "кошка"
   ]
 }
