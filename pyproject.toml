@@ -1,7 +1,7 @@
 [project]
-name = "levenshtein-py"
+name = "levdist"
 dynamic = ["version"]
-description = "Levenstein package"
+description = "Package to calculate the Levenstein distance"
 authors = [{ name = "Dmitry Erlikh", email = "derlih@gmail.com" }]
 dependencies = []
 requires-python = ">=3.8"
@@ -19,8 +19,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/derlih/levenshtein-py"
-Issues = "https://github.com/derlih/levenshtein-py/issues"
+Homepage = "https://github.com/derlih/levdist"
+Issues = "https://github.com/derlih/levdist/issues"
 
 [build-system]
 requires = ["pdm-backend", "setuptools"]

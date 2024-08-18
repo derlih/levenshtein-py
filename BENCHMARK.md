@@ -6,8 +6,8 @@
 
 | Package | Duration of one iteration |
 | ------- | ------------------------- |
-| levenshtein_py | 0.8156272999999999 |
-| Levenshtein | 0.3107000000000002 |
-| python-Levenshtein | 0.33643259999999997 |
-| leven | 0.13358520000000018 |
-| pylev | 18.5462616 |
+| levdist | 7.529907999999998e-07 |
+| Levenshtein | 3.14654e-07 |
+| python-Levenshtein | 3.4992780000000013e-07 |
+| leven | 1.3064299999999986e-07 |
+| pylev | 1.89667876e-05 |
