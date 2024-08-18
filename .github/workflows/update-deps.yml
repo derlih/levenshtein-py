@@ -3,9 +3,6 @@ name: Update dependencies
 on:
   schedule:
     - cron: '0 0 * * 0'
-  pull_request:
-    branches:
-      - "main"
 
 permissions:
   contents: write
