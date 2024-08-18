@@ -15,6 +15,7 @@ DISTANCE = 6
 @dataclass(frozen=True)
 class PackageToTest:
     name: str
+    pypi: str
     setup: str
     call: str
 
@@ -22,36 +23,35 @@ class PackageToTest:
 PACKAGES = (
     PackageToTest(
         "levdist",
+        "https://pypi.org/project/levdist/",
         "from levdist import levenshtein",
         f"levenshtein('{S1}', '{S2}')",
     ),
     PackageToTest(
         "Levenshtein",
+        "https://pypi.org/project/levenshtein/",
         "from Levenshtein import distance",
         f"distance('{S1}', '{S2}')",
     ),
     PackageToTest(
         "python-Levenshtein",
+        "https://pypi.org/project/python-Levenshtein/",
         "from Levenshtein import distance",
         f"distance('{S1}', '{S2}')",
     ),
     PackageToTest(
         "leven",
+        "https://pypi.org/project/leven/",
         "from leven import levenshtein",
         f"levenshtein('{S1}', '{S2}')",
     ),
     PackageToTest(
         "pylev",
+        "https://pypi.org/project/pylev/",
         "from pylev import levenshtein",
         f"levenshtein('{S1}', '{S2}')",
     ),
 )
-
-
-@dataclass(frozen=True)
-class BenchmarkResult:
-    pkg: str
-    duration: float
 
 
 class OutputFormat(str, Enum):
@@ -59,7 +59,7 @@ class OutputFormat(str, Enum):
     MARKDOWN = "md"
 
 
-def benchmark(pkg: PackageToTest) -> BenchmarkResult:
+def benchmark(pkg: PackageToTest) -> float:
     exec(
         f"""
 {pkg.setup}
@@ -73,7 +73,7 @@ assert {pkg.call} == {DISTANCE}
         number=ITERATIONS,
     )
 
-    return BenchmarkResult(pkg.name, result / ITERATIONS)
+    return result / ITERATIONS
 
 
 def main(
@@ -84,8 +84,8 @@ def main(
         results = tuple((benchmark(pkg) for pkg in pkgs))
 
     if format == OutputFormat.TEXT:
-        for result in results:
-            typer.echo(f"{result.pkg}: {result.duration / ITERATIONS} sec", output)
+        for pkg, duration in zip(PACKAGES, results):
+            typer.echo(f"{pkg.name} ({pkg.pypi}): {duration} sec", output)
     elif format == OutputFormat.MARKDOWN:
         typer.echo(f"# Benchmark ({ITERATIONS} iterations)", output)
         typer.echo(file=output)
@@ -98,12 +98,12 @@ def main(
         )
         typer.echo(
             """
-| Package | Duration of one iteration |
+| Package | Duration of one iteration (sec) |
 | ------- | ------------------------- |""",
             output,
         )
-        for result in results:
-            typer.echo(f"| {result.pkg} | {result.duration} |", output)
+        for pkg, duration in zip(PACKAGES, results):
+            typer.echo(f"| [{pkg.name}]({pkg.pypi}) | {duration} |", output)
 
 
 if __name__ == "__main__":
