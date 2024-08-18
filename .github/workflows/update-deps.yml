@@ -3,10 +3,16 @@ name: Update dependencies
 on:
   schedule:
     - cron: '0 0 * * 0'
+  pull_request:
+    branches:
+      - "main"
 
 permissions:
   contents: write
   pull-requests: write
+
+env:
+  PDM_VERSION: 2.17.1
 
 jobs:
   pre-commit-update:
@@ -45,3 +51,39 @@ jobs:
         run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash --delete-branch
         env:
           GH_TOKEN: ${{ github.token }}
+
+  dependencies-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Install python
+        uses: actions/setup-python@v5
+        id: setup-python
+        with:
+          python-version: 3.8
+      - name: Restore PDM installation
+        id: cache-pdm
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
+      - name: Install PDM
+        run: pip install pdm==${{ env.PDM_VERSION }}
+      - name: Update dependencies
+        run: pdm update --update-all --unconstrained
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.REPO_PAT }}
+          branch: update/pre-commit-autoupdate-${{ github.run_id }}
+          title: Auto-update pre-commit hooks
+          commit-message: Auto-update pre-commit hooks
+      # - name: Automerge commit
+      #   if: ${{ steps.create-pr.outputs.pull-request-number }}
+      #   run: gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash --delete-branch
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
