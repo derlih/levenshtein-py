@@ -1,16 +1,16 @@
-# levenshtein-py
+# levdist
 
 A Python package to calculate the Levinstein distance algorithm implementation with non-GPL license, typing and speedups.
 The implementation is based on code samples from [Levenstein Wiki](https://en.wikipedia.org/wiki/Levenshtein_distance).
 
 ## Installation
 
-`pip install levenshtein-py`
+`pip install levdist`
 
 ## Usage
 
 ```python
-from levenstein_py import levenshtein
+from levdist import levenshtein
 
 distance = levenstein("dog", "cat")
 ```

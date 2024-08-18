@@ -12,8 +12,6 @@ def pdm_build_update_setup_kwargs(
     context: Context, setup_kwargs: Dict[str, Any]
 ) -> None:
     sources = [
-        "src/levenshtein_py/native.c",
+        "src/levdist/native.c",
     ]
-    setup_kwargs.update(
-        ext_modules=[Extension(name="levenshtein_py.native", sources=sources)]
-    )
+    setup_kwargs.update(ext_modules=[Extension(name="levdist.native", sources=sources)])

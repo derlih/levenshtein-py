@@ -2,7 +2,7 @@ from typing import Callable
 
 import pytest
 
-from levenshtein_py import classic, wagner_fischer, wagner_fischer_native
+from levdist import classic, wagner_fischer, wagner_fischer_native
 
 
 @pytest.mark.parametrize(

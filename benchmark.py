@@ -21,8 +21,8 @@ class PackageToTest:
 
 PACKAGES = (
     PackageToTest(
-        "levenshtein_py",
-        "from levenshtein_py import levenshtein",
+        "levdist",
+        "from levdist import levenshtein",
         f"levenshtein('{S1}', '{S2}')",
     ),
     PackageToTest(
@@ -73,7 +73,7 @@ assert {pkg.call} == {DISTANCE}
         number=ITERATIONS,
     )
 
-    return BenchmarkResult(pkg.name, result)
+    return BenchmarkResult(pkg.name, result / ITERATIONS)
 
 
 def main(
