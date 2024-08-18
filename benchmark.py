@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from timeit import timeit
 from typing import Tuple
 
-ITERATIONS = 100_000
+ITERATIONS = 1_000_000
 S1 = "Levenshtein"
 S2 = "Frankenstein"
 DISTANCE = 6
