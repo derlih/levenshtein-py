@@ -36,6 +36,7 @@ benchmark = [
     "Levenshtein>=0.25.1",
     "python-Levenshtein>=0.25.1",
     "leven>=1.0.4",
+    "typer>=0.12.4",
 ]
 
 [tool.pdm.scripts]
