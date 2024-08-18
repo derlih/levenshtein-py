@@ -53,3 +53,4 @@ To create a release, create a tag `v<MAJOR>.<MINOR>.<PATCH>`. The [release](http
 ## Benchmark
 
 The benchmark of this package can be run using `pdm benchmark` command. It compare its speed with other Python implementations.
+Check the [BENCHMARK.md](BENCHMARK.md) for the latest measurements.
