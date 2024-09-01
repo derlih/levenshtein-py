@@ -77,6 +77,8 @@ jobs:
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
         run: pdm install -v -G test
+        env:
+          WITH_COVERAGE: 1
       - name: Run unit tests with coverage
         if: matrix.os != 'macos'
         run: pdm test-cov
