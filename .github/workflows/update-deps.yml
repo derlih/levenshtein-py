@@ -9,7 +9,7 @@ permissions:
   pull-requests: write
 
 env:
-  PDM_VERSION: 2.17.1
+  PDM_VERSION: 2.18.1
 
 jobs:
   pre-commit-update:
