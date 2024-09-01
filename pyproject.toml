@@ -36,15 +36,8 @@ run-setuptools = true
 source = "scm"
 
 [tool.pdm.dev-dependencies]
-test = [
-    "pytest>=8.3.2",
-    "coverage>=7.6.1",
-    "pytest-cov>=5.0.0",
-]
-lint = [
-    "pre-commit>=3.5.0",
-    "mypy>=1.11.2",
-]
+test = ["pytest>=8.3.2", "coverage>=7.6.1", "pytest-cov>=5.0.0"]
+lint = ["pre-commit>=3.5.0", "mypy>=1.11.2"]
 benchmark = [
     "pylev>=1.4.0",
     "Levenshtein>=0.25.1",
@@ -64,10 +57,10 @@ test-cov.composite = ["pytest --cov src", "python -m coverage xml"]
 test-cov-mac.shell = "{pdm} run test-cov"
 test-cov-mac.env = { LLVM_PROFILE_FILE = "coverage.profraw" }
 llvm-convert-coverage-file = "xcrun llvm-profdata merge -sparse coverage.profraw -o coverage.profdata"
-llvn-generate-lcov = { shell = "xcrun llvm-cov export --format=lcov --instr-profile=coverage.profdata src/levdist/native.*.so > coverage.lcov" }
+llvm-generate-lcov = { shell = "xcrun llvm-cov export --format=lcov --instr-profile=coverage.profdata src/levdist/native.*.so > coverage.lcov" }
 post_test-cov-mac.composite = [
     "{pdm} run llvm-convert-coverage-file",
-    "{pdm} run llvn-generate-lcov",
+    "{pdm} run llvm-generate-lcov",
 ]
 
 [tool.mypy]
