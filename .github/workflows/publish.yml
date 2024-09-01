@@ -8,7 +8,7 @@ on:
 permissions: {}
 
 env:
-  PDM_VERSION: 2.17.1
+  PDM_VERSION: 2.18.1
 
 jobs:
   build_wheel:
