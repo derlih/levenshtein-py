@@ -61,4 +61,11 @@ def _get_compiler() -> Compiler:
     build_ext.build_extensions = lambda: None
     # run to populate self.compiler
     build_ext.run()
-    return Compiler(build_ext.compiler.compiler_type)
+    compiler = build_ext.compiler
+    if hasattr(compiler, "compiler"):
+        return Compiler(build_ext.compiler.compiler[0])
+    elif compiler.compiler_type == "msvc":
+        return Compiler.MSVC
+
+    print(f"Unsupported compiler {compiler} {compiler.compiler_type}")
+    raise RuntimeError("Unsupported compiler")
