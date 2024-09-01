@@ -19,6 +19,8 @@ COVERAGE_FLAGS = {
     ],
     # Compiler.GCC: ["-fprofile-arcs", "-ftest-coverage"],
     # Compiler.MSVC: ["/source-charset:utf-8", "/Zi"],
+    Compiler.GCC: [],
+    Compiler.MSVC: [],
 }
 
 
