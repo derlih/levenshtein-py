@@ -66,49 +66,5 @@ jobs:
         id: setup-python
         with:
           python-version: ${{ matrix.python_version }}
-      - name: Restore PDM installation
-        id: pdm
-        uses: ./.github/actions/restore-pdm
-      - name: Restore test cache
-        id: cache-pdm-test
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pdm.outputs.pdm-cache-dir }}
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
-      - name: Install lint deps (CL)
-        if: matrix.os == 'windows'
-        run: pdm install -v -G test
-        env:
-          WITH_COVERAGE: 1
-      - name: Install lint deps (LLVM)
-        if: matrix.os == 'macos'
-        run: pdm install -v -G test
-        env:
-          WITH_COVERAGE: 1
-          CC: clang
-      - name: Install lint deps (GCC)
-        if: matrix.os == 'ubuntu'
-        run: pdm install -v -G test
-        env:
-          WITH_COVERAGE: 1
-          CC: gcc
-      - name: Install OpenCppCoverage
-        if: matrix.os == 'windows'
-        run: |
-          choco install OpenCppCoverage -y
-          echo "C:\Program Files\OpenCppCoverage" >> $env:GITHUB_PATH
-      - name: Run unit tests with coverage (CL)
-        if: matrix.os == 'windows'
-        run: pdm test-cov-cl
-      - name: Run unit tests with coverage (LLVM)
-        if: matrix.os == 'macos'
-        run: pdm test-cov-llvm
-      - name: Run unit tests with coverage (GCC)
-        if: matrix.os == 'ubuntu'
-        run: pdm test-cov-gcc
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml,./native.xml
-          flags: OS-${{ matrix.os }}-Python-${{ matrix.python_version }}
+      - name: Run test with report coverage
+        uses: ./.github/actions/run-test-report-coverage
