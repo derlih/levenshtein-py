@@ -28,11 +28,15 @@ jobs:
         id: setup-python
         with:
           python-version: 3.8
+      - name: Get pip cache path
+        id: get-pip-cache-path
+        run: |
+          echo "pip_cache_dir=${pip cache dir} >> $GITHUB_OUTPUT"
       - name: Restore PDM installation
         id: cache-pdm
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pip
+          path: ${{ steps.get-pip-cache-path.outputs.pip_cache_dir }}
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
       - name: Install PDM
         run: pip install pdm==${{ env.PDM_VERSION }}
@@ -54,7 +58,6 @@ jobs:
       - name: Type check
         run: pdm mypy
 
-
   test:
     permissions:
       contents: read
@@ -62,7 +65,7 @@ jobs:
     name: Unit tests
     strategy:
       matrix:
-        python_version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python_version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         os: [ubuntu, macos, windows]
       fail-fast: true
     runs-on: ${{ matrix.os }}-latest
