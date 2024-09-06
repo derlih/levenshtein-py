@@ -53,6 +53,7 @@ cover/
 *.profraw
 *.profdata
 *.lcov
+*.gcov
 
 # Translations
 *.mo

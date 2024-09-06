@@ -17,10 +17,8 @@ COVERAGE_FLAGS = {
         "-fprofile-instr-generate",
         "-fcoverage-mapping",
     ],
-    # Compiler.GCC: ["-fprofile-arcs", "-ftest-coverage"],
+    Compiler.GCC: ["--coverage"],
     # Compiler.MSVC: ["/source-charset:utf-8", "/Zi"],
-    Compiler.GCC: [],
-    Compiler.MSVC: [],
 }
 
 
@@ -36,7 +34,7 @@ def pdm_build_update_setup_kwargs(
     ]
 
     if os.environ.get("WITH_COVERAGE") is not None:
-        extra_compile_args = COVERAGE_FLAGS[_get_compiler()]
+        extra_compile_args = COVERAGE_FLAGS.get(_get_compiler(), [])
     else:
         extra_compile_args = []
     setup_kwargs.update(

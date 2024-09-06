@@ -54,14 +54,20 @@ benchmark = "python benchmark.py"
 
 test-cov.composite = ["pytest --cov src", "python -m coverage xml"]
 
-test-cov-mac.shell = "{pdm} run test-cov"
-test-cov-mac.env = { LLVM_PROFILE_FILE = "coverage.profraw" }
+# LLVM coverage
+test-cov-llvm.shell = "{pdm} run test-cov"
+test-cov-llvm.env = { LLVM_PROFILE_FILE = "coverage.profraw" }
 llvm-convert-coverage-file = "xcrun llvm-profdata merge -sparse coverage.profraw -o coverage.profdata"
 llvm-generate-lcov = { shell = "xcrun llvm-cov export --arch=arm64 --format=lcov --instr-profile=coverage.profdata src/levdist/native.*.so > coverage.lcov" }
-post_test-cov-mac.composite = [
+post_test-cov-llvm.composite = [
     "{pdm} run llvm-convert-coverage-file",
     "{pdm} run llvm-generate-lcov",
 ]
+
+# GCC coverage
+test-cov-gcc = "{pdm} run test-cov"
+post_test-cov-gcc.shell = "gcov -o $(find . -name '*.gcno' -exec dirname {} \\;) src/levdist/*.c"
+
 
 [tool.mypy]
 strict = true
