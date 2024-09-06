@@ -105,5 +105,5 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml,./coverage.lcov,./*.gcov
+          files: ./coverage.xml
           flags: OS-${{ matrix.os }}-Python-${{ matrix.python_version }}
