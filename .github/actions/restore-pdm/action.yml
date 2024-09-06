@@ -34,6 +34,8 @@ runs:
     - name: Install PDM
       shell: bash
       run: uv pip install pdm==${{ inputs.pdm-version }}
+      env:
+        UV_SYSTEM_PYTHON: 1
     - name: Get PDM cache dir
       id: get-pdm-cache-path
       shell: bash
