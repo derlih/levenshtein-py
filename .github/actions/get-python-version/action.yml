@@ -10,4 +10,4 @@ runs:
     - name: Get python version
       id: get-python-version
       shell: bash
-      run: python .github/actions/restore-pdm/action.py python
+      run: python .github/actions/get-python-version/action.py
