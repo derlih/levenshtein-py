@@ -4,6 +4,9 @@ inputs:
     description: "OpenCppCoverage version to install"
     required: true
     default: "0.9.9.0"
+  codecov-token:
+    description: "Codecov token"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -73,6 +76,6 @@ runs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+        token: ${{ inputs.codecov-token }}
         files: ./coverage.xml,./native.xml
-        flags: OS-${{ matrix.os }}-Python-${{ matrix.python_version }}
+        flags: OS-${{ runner.os }}-Python-${{ steps.get-python-version.outputs.python-version }}
