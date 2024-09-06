@@ -18,7 +18,7 @@ COVERAGE_FLAGS = {
         "-fcoverage-mapping",
     ],
     Compiler.GCC: ["--coverage"],
-    # Compiler.MSVC: ["/source-charset:utf-8", "/Zi"],
+    Compiler.MSVC: ["/source-charset:utf-8", "/Zi", "/DEBUG"],
 }
 
 

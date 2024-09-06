@@ -54,6 +54,8 @@ cover/
 *.profdata
 *.lcov
 *.gcov
+*.pdb
+native.xml
 
 # Translations
 *.mo

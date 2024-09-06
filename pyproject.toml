@@ -67,6 +67,9 @@ post_test-cov-llvm.composite = [
 # GCC coverage
 test-cov-gcc.shell = "{pdm} run test-cov"
 
+# CL coverage
+test-cov-cl.shell = "OpenCppCoverage --sources src\\levdist --modules src\\levdist --export_type cobertura:native.xml --optimized_build  --cover_children -- {pdm} test-cov"
+
 [tool.mypy]
 strict = true
 exclude = ["tests"]

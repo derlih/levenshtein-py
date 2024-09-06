@@ -75,7 +75,7 @@ jobs:
         with:
           path: ${{ steps.pdm.outputs.pdm-cache-dir }}
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
-      - name: Install lint deps
+      - name: Install lint deps (CL)
         if: matrix.os == 'windows'
         run: pdm install -v -G test
         env:
@@ -92,9 +92,14 @@ jobs:
         env:
           WITH_COVERAGE: 1
           CC: gcc
-      - name: Run unit tests with coverage
+      - name: Install OpenCppCoverage
         if: matrix.os == 'windows'
-        run: pdm test-cov
+        run: |
+          choco install OpenCppCoverage -y
+          echo "C:\Program Files\OpenCppCoverage" >> $env:GITHUB_PATH
+      - name: Run unit tests with coverage (CL)
+        if: matrix.os == 'windows'
+        run: pdm test-cov-cl
       - name: Run unit tests with coverage (LLVM)
         if: matrix.os == 'macos'
         run: pdm test-cov-llvm
@@ -105,5 +110,5 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
+          files: ./coverage.xml,./native.xml
           flags: OS-${{ matrix.os }}-Python-${{ matrix.python_version }}
