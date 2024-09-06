@@ -10,9 +10,6 @@ on:
 
 permissions: {}
 
-env:
-  PDM_VERSION: 2.18.1
-
 jobs:
   lint:
     permissions:
@@ -28,23 +25,14 @@ jobs:
         id: setup-python
         with:
           python-version: 3.8
-      - name: Get pip cache path
-        id: get-pip-cache-path
-        run: |
-          echo "pip_cache_dir=${pip cache dir} >> $GITHUB_OUTPUT"
       - name: Restore PDM installation
-        id: cache-pdm
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.get-pip-cache-path.outputs.pip_cache_dir }}
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
-      - name: Install PDM
-        run: pip install pdm==${{ env.PDM_VERSION }}
+        id: pdm
+        uses: ./.github/actions/restore-pdm
       - name: Restore lint cache
         id: cache-pdm-lint
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pdm
+          path: ${{ steps.pdm.outputs.pdm-cache-dir }}
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
         run: pdm install -G lint
@@ -79,18 +67,13 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
       - name: Restore PDM installation
-        id: cache-pdm
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
-      - name: Install PDM
-        run: pip install pdm==${{ env.PDM_VERSION }}
+        id: pdm
+        uses: ./.github/actions/restore-pdm
       - name: Restore test cache
         id: cache-pdm-test
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pdm
+          path: ${{ steps.pdm.outputs.pdm-cache-dir }}
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
         run: pdm install -v -G test
