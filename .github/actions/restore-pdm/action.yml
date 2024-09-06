@@ -15,8 +15,7 @@ runs:
   steps:
     - name: Get python version
       id: get-python-version
-      shell: bash
-      run: python .github/actions/restore-pdm/action.py python
+      uses: ./.github/actions/get-python-version
     - name: Get pip cache dir
       id: get-pip-cache-path
       shell: bash
