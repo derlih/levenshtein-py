@@ -13,9 +13,11 @@ runs:
   steps:
     - name: Get python version
       id: get-python-version
+      shell: bash
       run: python .github/actions/restore-pdm/action.py python
     - name: Get pip cache dir
       id: get-pip-cache-path
+      shell: bash
       run: python .github/actions/restore-pdm/action.py pip
     - name: Restore PDM installation
       uses: actions/cache@v4
@@ -23,7 +25,9 @@ runs:
         path: ${{ steps.get-pip-cache-path.outputs.pip-cache-dir }}
         key: ${{ runner.os }}-python-${{ steps.get-python-version.outputs.python-version }}-pdm-${{ inputs.pdm-version }}
     - name: Install PDM
+      shell: bash
       run: pip install pdm==${{ inputs.pdm-version }}
     - name: Get PDM cache dir
       id: get-pdm-cache-path
+      shell: bash
       run: python .github/actions/restore-pdm/action.py pdm
