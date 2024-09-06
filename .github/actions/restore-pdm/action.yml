@@ -33,7 +33,7 @@ runs:
         key: ${{ runner.os }}-python-${{ steps.get-python-version.outputs.python-version }}-pdm-${{ inputs.pdm-version }}
     - name: Install PDM
       shell: bash
-      run: uv pip install pdm==${{ inputs.pdm-version }}
+      run: uv pip install --system pdm==${{ inputs.pdm-version }}
     - name: Get PDM cache dir
       id: get-pdm-cache-path
       shell: bash
