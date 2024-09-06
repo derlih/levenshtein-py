@@ -7,9 +7,6 @@ on:
 
 permissions: {}
 
-env:
-  PDM_VERSION: 2.18.1
-
 jobs:
   build_wheel:
     name: Build wheel package
@@ -18,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        python_version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python_version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         os: [ubuntu, macos, windows]
       fail-fast: true
 
@@ -33,13 +30,8 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
       - name: Restore PDM installation
-        id: cache-pdm
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}
-      - name: Install PDM
-        run: pip install pdm==${{ env.PDM_VERSION }}
+        id: pdm
+        uses: ./.github/actions/restore-pdm
       - name: Build wheel
         run: pdm build --no-sdist
       - name: Upload wheel artifact
@@ -65,14 +57,9 @@ jobs:
         id: setup-python
         with:
           python-version: 3.8
-      - name: Restore PDM and Twine installation
-        id: cache-pdm
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-${{ env.PDM_VERSION}}-twine
-      - name: Install PDM
-        run: pip install pdm==${{ env.PDM_VERSION }}
+      - name: Restore PDM installation
+        id: pdm
+        uses: ./.github/actions/restore-pdm
       - name: Install twine
         run: pip install twine
       - name: Build sdist
