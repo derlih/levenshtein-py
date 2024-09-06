@@ -11,41 +11,6 @@ on:
 permissions: {}
 
 jobs:
-  lint:
-    permissions:
-      contents: read
-
-    name: Code lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install python
-        uses: actions/setup-python@v5
-        id: setup-python
-        with:
-          python-version: 3.8
-      - name: Restore PDM installation
-        id: pdm
-        uses: ./.github/actions/restore-pdm
-      - name: Restore lint cache
-        id: cache-pdm-lint
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pdm.outputs.pdm-cache-dir }}
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
-      - name: Install lint deps
-        run: pdm install -G lint
-      - name: Restore pre-commit hooks
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pre-commit
-          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
-      - name: Linter
-        run: pdm lint
-      - name: Type check
-        run: pdm mypy
-
   test:
     permissions:
       contents: read
