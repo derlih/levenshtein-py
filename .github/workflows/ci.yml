@@ -76,13 +76,20 @@ jobs:
           path: ${{ steps.pdm.outputs.pdm-cache-dir }}
           key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
       - name: Install lint deps
+        if: matrix.os != 'macos'
         run: pdm install -v -G test
         env:
           WITH_COVERAGE: 1
+      - name: Install lint deps (LLVM)
+        if: matrix.os == 'macos'
+        run: pdm install -v -G test
+        env:
+          WITH_COVERAGE: 1
+          CC: clang
       - name: Run unit tests with coverage
         if: matrix.os != 'macos'
         run: pdm test-cov
-      - name: Run unit tests with coverage (MacOS)
+      - name: Run unit tests with coverage (LLVM)
         if: matrix.os == 'macos'
         run: pdm test-cov-mac
       - name: Upload coverage reports to Codecov
