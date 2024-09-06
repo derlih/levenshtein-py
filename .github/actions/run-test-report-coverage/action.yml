@@ -22,7 +22,7 @@ runs:
       run: choco install OpenCppCoverage --version=${{ inputs.open-cpp-coverage-version }} -y
     - name: Add OpenCppCoverage to PATH
       if: runner.os == 'windows'
-      shell: bash
+      shell: pwsh
       run: echo "C:\Program Files\OpenCppCoverage" >> $env:GITHUB_PATH
     - name: Restore PDM installation
       id: pdm
