@@ -5,11 +5,7 @@
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/levdist)](https://pypi.org/project/levdist/)
 
 ![CI](https://github.com/derlih/levdist/actions/workflows/ci.yml/badge.svg)
-
-<!--
-TODO: uncomment when C coverage is done
 [![codecov](https://codecov.io/gh/derlih/levdist/graph/badge.svg?token=S63YTJUSN3)](https://codecov.io/gh/derlih/levdist)
--->
 
 A Python package to calculate the Levinstein distance algorithm implementation with non-GPL license, typing and speedups.
 The implementation is based on code samples from [Levenstein Wiki](https://en.wikipedia.org/wiki/Levenshtein_distance).
