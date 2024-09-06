@@ -6,7 +6,9 @@ inputs:
     default: "2.18.1"
 
 outputs:
-  pdm-cache-dir: ${{ steps.get-pdm-cache-path.outputs.pdm-cache-dir }}
+  pdm-cache-dir:
+    description: "PDM cache directory"
+    value: ${{ steps.get-pdm-cache-path.outputs.pdm-cache-dir }}
 
 runs:
   using: "composite"
