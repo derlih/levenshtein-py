@@ -66,22 +66,7 @@ jobs:
         id: setup-python
         with:
           python-version: ${{ matrix.python_version }}
-      - name: Restore PDM installation
-        id: pdm
-        uses: ./.github/actions/restore-pdm
-      - name: Restore test cache
-        id: cache-pdm-test
-        uses: actions/cache@v4
+      - name: Run test with report coverage
+        uses: ./.github/actions/run-test-report-coverage
         with:
-          path: ${{ steps.pdm.outputs.pdm-cache-dir }}
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
-      - name: Install lint deps
-        run: pdm install -v -G test
-      - name: Run unit tests with coverage
-        run: pdm test-cov
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          flags: OS-${{ matrix.os }}-Python-${{ matrix.python_version }}
+          codecov-token: ${{ secrets.CODECOV_TOKEN }}

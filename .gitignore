@@ -50,6 +50,12 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+*.profraw
+*.profdata
+*.lcov
+*.gcov
+*.pdb
+native.xml
 
 # Translations
 *.mo
