@@ -59,9 +59,7 @@ test-cov-mac.env = { LLVM_PROFILE_FILE = "coverage.profraw" }
 llvm-convert-coverage-file = "xcrun llvm-profdata merge -sparse coverage.profraw -o coverage.profdata"
 llvm-generate-lcov = { shell = "xcrun llvm-cov export --arch=arm64 --format=lcov --instr-profile=coverage.profdata src/levdist/native.*.so > coverage.lcov" }
 post_test-cov-mac.composite = [
-    "ls -la",
     "{pdm} run llvm-convert-coverage-file",
-    "ls -la",
     "{pdm} run llvm-generate-lcov",
 ]
 
