@@ -15,4 +15,3 @@ except ImportError:
     levenshtein = wagner_fischer
 
 __all__ = ["classic", "levenshtein", "wagner_fischer"]
-
