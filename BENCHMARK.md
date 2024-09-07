@@ -8,6 +8,5 @@
 | ------- | ------------------------- |
 | [levdist](https://pypi.org/project/levdist/) | 7.341828000000001e-07 |
 | [Levenshtein](https://pypi.org/project/levenshtein/) | 3.3272089999999996e-07 |
-| [python-Levenshtein](https://pypi.org/project/python-Levenshtein/) | 3.1957609999999994e-07 |
 | [leven](https://pypi.org/project/leven/) | 1.292759000000001e-07 |
 | [pylev](https://pypi.org/project/pylev/) | 1.8344600399999997e-05 |

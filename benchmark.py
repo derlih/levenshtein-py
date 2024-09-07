@@ -36,12 +36,6 @@ PACKAGES = (
         f"distance('{S1}', '{S2}')",
     ),
     PackageToTest(
-        "python-Levenshtein",
-        "https://pypi.org/project/python-Levenshtein/",
-        "from Levenshtein import distance",
-        f"distance('{S1}', '{S2}')",
-    ),
-    PackageToTest(
         "leven",
         "https://pypi.org/project/leven/",
         "from leven import levenshtein",
