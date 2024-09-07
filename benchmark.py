@@ -6,12 +6,14 @@ from timeit import timeit
 
 import typer
 
-from levdist import classic
+from levdist import levenshtein
 
 ITERATIONS = 1_000_000
-S1 = "Levenshtein"
-S2 = "Frankenstein"
-DISTANCE = classic(S1, S2)
+# `leven` has some hacks that remove same prefix and suffix.
+# To measure it fair I adjusted the strings.
+S1 = "1Levenshtein1"
+S2 = "2Frankenstein2"
+DISTANCE = levenshtein(S1, S2)
 
 
 @dataclass(frozen=True)
