@@ -6,6 +6,7 @@
 
 | Package | Duration of one iteration (sec) |
 | ------- | ------------------------- |
-| [levdist](https://pypi.org/project/levdist/) | 3.029328e-07 |
-| [Levenshtein](https://pypi.org/project/levenshtein/) | 3.4692429999999997e-07 |
-| [leven](https://pypi.org/project/leven/) | 2.109186999999999e-07 |
+| [levdist](https://pypi.org/project/levdist/) | 3.1275960000000003e-07 |
+| [Levenshtein](https://pypi.org/project/levenshtein/) | 3.554359e-07 |
+| [leven](https://pypi.org/project/leven/) | 2.2885029999999994e-07 |
+| [pylev](https://pypi.org/project/pylev/) | 2.66228654e-05 |
