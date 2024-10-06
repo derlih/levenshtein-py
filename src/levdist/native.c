@@ -18,7 +18,6 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
     return PyLong_FromSsize_t(0);
   }
 
-  PyObject *res = NULL;
   const Py_ssize_t len_a = PyUnicode_GetLength(a);
   int kind_a = PyUnicode_KIND(a);
   void *data_a = PyUnicode_DATA(a);
@@ -34,7 +33,9 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
   Py_ssize_t *v1 = malloc((len_b + 1) * sizeof(Py_ssize_t));
   if (v1 == NULL) {
     PyErr_SetString(PyExc_SystemError, "Can't allocate buffer");
-    goto cleanup;
+
+    free(v0);
+    return NULL;
   }
   for (Py_ssize_t i = 0; i < len_b + 1; i++) {
     v0[i] = i;
@@ -64,9 +65,8 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
     v0 = v1;
     v1 = tmp;
   }
-  res = PyLong_FromSsize_t(v0[len_b]);
 
-cleanup:
+  PyObject *res = PyLong_FromSsize_t(v0[len_b]);
   free(v0);
   free(v1);
   return res;
