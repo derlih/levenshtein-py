@@ -30,7 +30,7 @@ def pdm_build_update_setup_kwargs(
     context: Context, setup_kwargs: Dict[str, Any]
 ) -> None:
     sources = [
-        "src/levdist/native.c",
+        "src/levdist/native.cpp",
     ]
 
     if os.environ.get("WITH_COVERAGE") is not None:
