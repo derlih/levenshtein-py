@@ -14,14 +14,23 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
     return NULL;
   }
 
-  if (PyUnicode_Compare(a, b) == 0) {
+  const Py_ssize_t len_a = PyUnicode_GetLength(a);
+  const Py_ssize_t len_b = PyUnicode_GetLength(b);
+
+  if (len_a == 0) {
+    return PyLong_FromSsize_t(len_b);
+  }
+
+  if (len_b == 0) {
+    return PyLong_FromSsize_t(len_a);
+  }
+
+  if (len_a == len_b && PyUnicode_Compare(a, b) == 0) {
     return PyLong_FromSsize_t(0);
   }
 
-  const Py_ssize_t len_a = PyUnicode_GetLength(a);
   int kind_a = PyUnicode_KIND(a);
   void *data_a = PyUnicode_DATA(a);
-  const Py_ssize_t len_b = PyUnicode_GetLength(b);
   int kind_b = PyUnicode_KIND(b);
   void *data_b = PyUnicode_DATA(b);
 
