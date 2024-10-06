@@ -43,12 +43,12 @@ PACKAGES = (
         "from leven import levenshtein",
         f"levenshtein('{S1}', '{S2}')",
     ),
-    PackageToTest(
-        "pylev",
-        "https://pypi.org/project/pylev/",
-        "from pylev import levenshtein",
-        f"levenshtein('{S1}', '{S2}')",
-    ),
+    # PackageToTest(
+    #     "pylev",
+    #     "https://pypi.org/project/pylev/",
+    #     "from pylev import levenshtein",
+    #     f"levenshtein('{S1}', '{S2}')",
+    # ),
 )
 
 
