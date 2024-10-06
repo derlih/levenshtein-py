@@ -20,7 +20,11 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
 
   PyObject *res = NULL;
   const Py_ssize_t len_a = PyUnicode_GetLength(a);
+  int kind_a = PyUnicode_KIND(a);
+  void *data_a = PyUnicode_DATA(a);
   const Py_ssize_t len_b = PyUnicode_GetLength(b);
+  int kind_b = PyUnicode_KIND(b);
+  void *data_b = PyUnicode_DATA(b);
 
   Py_ssize_t *v0 = malloc((len_b + 1) * sizeof(Py_ssize_t));
   if (v0 == NULL) {
@@ -46,7 +50,8 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
       deletion_cost = v0[j + 1] + 1;
       insertion_cost = v1[j] + 1;
 
-      if (PyUnicode_ReadChar(a, i) == PyUnicode_ReadChar(b, j)) {
+      if (PyUnicode_READ(kind_a, data_a, i) ==
+          PyUnicode_READ(kind_b, data_b, j)) {
         substitution_cost = v0[j];
       } else {
         substitution_cost = v0[j] + 1;
