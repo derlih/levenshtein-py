@@ -18,6 +18,7 @@ from levdist.wagner_fischer import wagner_fischer
         pytest.param("for", "force", 2),
         pytest.param("Levenshtein", "Frankenstein", 6),
         pytest.param("кошка", "кот", 3, id="Unicode"),
+        pytest.param("🏉", "🎻", 1, id="Emoji"),
     ],
 )
 @pytest.mark.parametrize("fn", [classic, wagner_fischer, wagner_fischer_native])
