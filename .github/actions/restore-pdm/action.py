@@ -9,8 +9,8 @@ def get_cmd_output(*cmd: List[str]) -> str:
     return r.stdout.decode().strip()
 
 
-def get_pip_cache_dir() -> str:
-    return get_cmd_output("pip", "cache", "dir")
+def get_uv_cache_dir() -> str:
+    return get_cmd_output("uv", "cache", "dir")
 
 
 def get_pdm_cache_dir() -> str:
@@ -19,10 +19,10 @@ def get_pdm_cache_dir() -> str:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("type", choices=["pip", "pdm"])
+    parser.add_argument("type", choices=["pip", "uv", "pdm"])
     args = parser.parse_args()
     with open(os.environ["GITHUB_OUTPUT"], "w") as f:
-        if args.type == "pip":
-            print(f"pip-cache-dir={get_pip_cache_dir()}", file=f)
+        if args.type == "uv":
+            print(f"uv-cache-dir={get_uv_cache_dir()}", file=f)
         elif args.type == "pdm":
             print(f"pdm-cache-dir={get_pdm_cache_dir()}", file=f)
